@@ -1,22 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:training_app/src/Blocs/Authentication_Bloc/Authentication_Bloc.dart';
+import 'package:training_app/src/Blocs/Authentication_Bloc/Authentication_Event.dart';
 import 'package:training_app/src/UI/Common/Stylings.dart';
 
 class LoginScreen extends StatefulWidget {
+
+  final AuthenticationBloc _authenticationBloc;
+
+  LoginScreen({Key key, @required AuthenticationBloc authenticationBloc})
+      : assert(authenticationBloc != null),
+        _authenticationBloc = authenticationBloc,
+        super(key: key);
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
+
 class _LoginScreenState extends State<LoginScreen> {
+  AuthenticationBloc get _authenticationBloc => widget._authenticationBloc;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Padding(
-          padding: EdgeInsets.all(20.0),
-          child: Form(
-            child: _loginForm(),
+            padding: EdgeInsets.all(20.0),
+            child: Form(
+              child: _loginForm(),
+            ),
           ),
-        ),
       ),
     );
   }
@@ -82,7 +100,9 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Center(
               child: RaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  _authenticationBloc.dispatch(LogIn());
+                },
                 color: Style.primaryColor,
                 splashColor: Style.primaryLightColor,
                 shape: Style.roundedButtonShape,
@@ -103,24 +123,24 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 50.0,
             ),
             Align(
-                child: InkWell(
-                  onTap: () {},
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        "Don't have an account?",
-                        style: Style.text12Regular,
-                      ),
-                      Text(
-                        " SIGN UP",
-                        style: Style.signupLinkTextStyle,
-                      ),
-                    ],
-                  ),
+              child: InkWell(
+                onTap: () {},
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "Don't have an account?",
+                      style: Style.text12Regular,
+                    ),
+                    Text(
+                      " SIGN UP",
+                      style: Style.signupLinkTextStyle,
+                    ),
+                  ],
                 ),
-                alignment: Alignment.bottomCenter,
               ),
+              alignment: Alignment.bottomCenter,
+            ),
           ],
         ),
       ),

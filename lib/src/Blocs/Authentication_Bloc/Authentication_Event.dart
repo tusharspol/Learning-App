@@ -21,3 +21,8 @@ class LoggedOut extends AuthenticationEvent {
   @override
   String toString() => 'LoggedOut';
 }
+
+class LogIn extends AuthenticationEvent {
+  @override
+  String toString() => 'LogIn';
+}

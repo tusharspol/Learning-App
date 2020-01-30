@@ -13,7 +13,7 @@ class AuthenticationService {
     try{
       SharedPreferences sharedUser = await SharedPreferences.getInstance();
       var isRegistered = jsonDecode(sharedUser.getString('isUserRegisterd'));
-      return false;
+      return isRegistered;
     }catch(e){
       return false;
     }

@@ -66,7 +66,7 @@ class _AppState extends State<App> {
               return Scaffold(body: Container(child: Center(child: Text("The training app", style: TextStyle(fontSize: 20)))));
             }
             if (state is Unauthenticated) {
-              return LoginScreen();
+              return LoginScreen(authenticationBloc: _authenticationBloc,);
             }
             if (state is Authenticated) {
               return Container(child: Text("Authenticated"),);

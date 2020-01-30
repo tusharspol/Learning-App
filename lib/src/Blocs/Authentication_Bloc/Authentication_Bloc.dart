@@ -28,6 +28,8 @@ final AuthenticationService _authenticationService;
       yield* _mapLoggedInToState();
     } else if (event is LoggedOut) {
       yield* _mapLoggedOutToState();
+    } else if (event is LogIn) {
+      yield* _mapLoginToState();
     }
   }
 
@@ -41,21 +43,6 @@ final AuthenticationService _authenticationService;
     else {
       yield Unauthenticated();
     }
-    // try {
-    //   if (isSignedIn & !isFreshlyRegistered) {
-    //     yield Authenticated(name);
-    //   }
-    //   else if(isSignedIn && isFreshlyRegistered){
-    //     yield RegisteredState();
-    //   } 
-    //   else {
-    //     yield Unauthenticated();
-    //   }
-    // } 
-    // catch (e) 
-    // {
-    //   yield Unauthenticated();
-    // }
   }
 
   Stream<AuthenticationState> _mapLoggedInToState() async* {
@@ -71,7 +58,12 @@ final AuthenticationService _authenticationService;
     yield Unauthenticated();
   }
 
-  Stream<AuthenticationState> _mapRegisterToState() async* {
-    // yield RegisteredState();
+  Stream<AuthenticationState> _mapLoginToState() async* {
+    bool isUserLoggedIn = await _authenticationService.authenticateUser("emailID", "password");
+    if(isUserLoggedIn){
+      yield Authenticated("Tushar");
+    }else {
+      yield Unauthenticated();
+    }
   }
 }
