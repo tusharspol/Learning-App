@@ -4,9 +4,9 @@ import 'package:training_app/src/Blocs/Authentication_Bloc/Authentication_Bloc.d
 import 'package:training_app/src/Blocs/Authentication_Bloc/Authentication_Event.dart';
 import 'package:training_app/src/Blocs/Authentication_Bloc/Authentication_State.dart';
 import 'package:training_app/src/Services/Authentication_Data.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_app/src/SimpleBlocDelegate.dart';
 import 'package:bloc/bloc.dart';
+import 'package:training_app/src/UI/Home/HomeScreen.dart';
 import 'package:training_app/src/UI/Login/Login.dart';
 
 // void main() => runApp(MyApp());
@@ -69,7 +69,7 @@ class _AppState extends State<App> {
               return LoginScreen(authenticationBloc: _authenticationBloc,);
             }
             if (state is Authenticated) {
-              return Container(child: Text("Authenticated"),);
+              return HomeScreen();
             }
             return Text("Loader from main screen");
           },
