@@ -1,0 +1,87 @@
+{
+    "trainings": [{
+        "id": "1",
+        "name": "Safe Scrum Master(4.6)",
+        "startDate": "2020-02-02 23:32:39.118",
+        "endDate": "2020-02-02 23:32:39.118",
+        "venue": "Convention hall, Grater lorem ipsum",
+        "startTime": "11:20:AM",
+        "endTime": "01:20:PM",
+        "trainerName": "Tushar Pol",
+        "fees": "500",
+        "discount": "0",
+        "tagLine": "Filling fast",
+        "trainingOverview": "Info about training. Lorem ipsum and something abput Lord of the Rings. Lorem ipsum and something abput Lord of the Rings."
+    },
+    {
+        "id": "2",
+        "name": "Unsafe Agile Master(4.6)",
+        "startDate": "2020-02-02 23:32:39.118",
+        "endDate": "2020-02-02 23:32:39.118",
+        "venue": "Convention hall, Grater lorem ipsum",
+        "startTime": "08:00:AM",
+        "endTime": "10:00:AM",
+        "trainerName": "Rahul Saxena",
+        "fees": "600",
+        "discount": "50",
+        "tagLine": "Early bird!",
+        "trainingOverview": "Info about training. Lorem ipsum and something abput Lord of the Rings. Lorem ipsum and something abput Lord of the Rings."
+    },
+    {
+        "id": "3",
+        "name": "Unsafe Agile Master(4.6)",
+        "startDate": "2020-02-02 23:32:39.118",
+        "endDate": "2020-02-02 23:32:39.118",
+        "venue": "Convention hall, Grater lorem ipsum",
+        "startTime": "08:00:AM",
+        "endTime": "10:00:AM",
+        "trainerName": "Rahul Saxena",
+        "fees": "600",
+        "discount": "50",
+        "tagLine": "Early bird!",
+        "trainingOverview": "Info about training. Lorem ipsum and something abput Lord of the Rings. Lorem ipsum and something abput Lord of the Rings."
+    },
+    {
+        "id": "4",
+        "name": "Unsafe Agile Master(4.6)",
+        "startDate": "2020-02-02 23:32:39.118",
+        "endDate": "2020-02-02 23:32:39.118",
+        "venue": "Convention hall, Grater lorem ipsum",
+        "startTime": "08:00:AM",
+        "endTime": "10:00:AM",
+        "trainerName": "Rahul Saxena",
+        "fees": "600",
+        "discount": "50",
+        "tagLine": "Early bird!",
+        "trainingOverview": "Info about training. Lorem ipsum and something abput Lord of the Rings. Lorem ipsum and something abput Lord of the Rings."
+    },
+    {
+        "id": "5",
+        "name": "Unsafe Agile Master(4.6)",
+        "startDate": "2020-02-02 23:32:39.118",
+        "endDate": "2020-02-02 23:32:39.118",
+        "venue": "Convention hall, Grater lorem ipsum",
+        "startTime": "08:00:AM",
+        "endTime": "10:00:AM",
+        "trainerName": "Rahul Saxena",
+        "fees": "600",
+        "discount": "50",
+        "tagLine": "Early bird!",
+        "trainingOverview": "Info about training. Lorem ipsum and something abput Lord of the Rings. Lorem ipsum and something abput Lord of the Rings."
+    },
+    {
+        "id": "6",
+        "name": "Unsafe Agile Master(4.6)",
+        "startDate": "2020-02-02 23:32:39.118",
+        "endDate": "2020-02-02 23:32:39.118",
+        "venue": "Convention hall, Grater lorem ipsum",
+        "startTime": "08:00:AM",
+        "endTime": "10:00:AM",
+        "trainerName": "Rahul Saxena",
+        "fees": "600",
+        "discount": "50",
+        "tagLine": "Early bird!",
+        "trainingOverview": "Info about training. Lorem ipsum and something abput Lord of the Rings. Lorem ipsum and something abput Lord of the Rings."
+    }
+    ]
+}

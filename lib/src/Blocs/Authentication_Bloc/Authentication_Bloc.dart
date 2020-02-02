@@ -34,9 +34,7 @@ final AuthenticationService _authenticationService;
   }
 
   Stream<AuthenticationState> _mapAppStartedToState() async* {
-
-    bool isUserRegistered = await _authenticationService.isUserAuthenticated();
-    
+    bool isUserRegistered = await _authenticationService.isUserAuthenticated();    
     if(isUserRegistered){
       yield Authenticated("Tushar");
     }

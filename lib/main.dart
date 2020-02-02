@@ -4,6 +4,7 @@ import 'package:training_app/src/Blocs/Authentication_Bloc/Authentication_Bloc.d
 import 'package:training_app/src/Blocs/Authentication_Bloc/Authentication_Event.dart';
 import 'package:training_app/src/Blocs/Authentication_Bloc/Authentication_State.dart';
 import 'package:training_app/src/Services/Authentication_Data.dart';
+import 'package:training_app/src/Services/Trainings_Data.dart';
 import 'package:training_app/src/SimpleBlocDelegate.dart';
 import 'package:bloc/bloc.dart';
 import 'package:training_app/src/UI/Home/HomeScreen.dart';
@@ -39,7 +40,9 @@ class _AppState extends State<App> {
   final AuthenticationService _authenticationService = AuthenticationService();
 
   @override
-  void initState() {
+  void initState(){
+    TimeOfDay td = TimeOfDay.now();
+    print(td);
     super.initState();
     _authenticationBloc =
         AuthenticationBloc(authenticationService: _authenticationService);
@@ -48,6 +51,7 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
+
     return BlocProvider(
       bloc: _authenticationBloc,
       child: MaterialApp(
