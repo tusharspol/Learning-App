@@ -1,33 +1,298 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:training_app/src/Blocs/Trainings_Bloc/HomePage_Bloc.dart';
+import 'package:training_app/src/Blocs/Trainings_Bloc/HomePage_Event.dart';
+import 'package:training_app/src/Blocs/Trainings_Bloc/HomePage_State.dart';
+import 'package:training_app/src/Models/Trainings.dart';
+import 'package:training_app/src/Services/Trainings_Data.dart';
+import 'package:training_app/src/UI/Home/HomeScreenCard.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  String selectedSortButton = "";
+  double modalHeight = 260;
+  HomePageBloc _homePageBloc;
+  final TrainingsService _trainingsService = new TrainingsService();
+
+  @override
+  void initState() {
+    super.initState();
+    selectedSortButton = "Sort by";
+    _homePageBloc = HomePageBloc(trainingsService: _trainingsService);
+    _homePageBloc.dispatch(FetchHomePageRecords());
+  }
+
+  circleButton() {
+    return Container(
+      padding: EdgeInsets.all(10),
+      width: 65,
+      height: 65,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(100),
+        color: Colors.white,
+        boxShadow: <BoxShadow>[
+          BoxShadow(color: Colors.grey.shade300, blurRadius: 10.0)
+        ],
+      ),
+      child: Icon(
+        Icons.flight,
+        color: Color(0xff007AFD),
+      ),
+    );
+  }
+
+  _filterButton(StateSetter updateState, String btnName) {
+    return InkWell(
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 200),
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+        decoration: BoxDecoration(
+            border: Border(
+                left: BorderSide(
+                    color: Colors.redAccent,
+                    width: btnName == selectedSortButton ? 5 : 0)),
+            color: btnName == selectedSortButton
+                ? Colors.white
+                : Colors.grey.shade300),
+        child: Text(
+          btnName,
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
+      ),
+      onTap: () {
+        updateFilterName(updateState, btnName);
+      },
+    );
+  }
+
+  Future<Null> updateFilterName(StateSetter updateState, String btnName) async {
+    updateState(() {
+      selectedSortButton = btnName;
+    });
+  }
+
+  void _modalBottomSheetMenu() {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(builder: (context, setState) {
+            return Container(
+                height: 500,
+                color: Colors.transparent,
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(color: Colors.grey.shade300))),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text("Sort and Filters",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 20)),
+                          IconButton(
+                            icon: Icon(Icons.close),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                    // Divider(),
+                    Expanded(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            width: 200,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                _filterButton(setState, "Sort by"),
+                                _filterButton(setState, "Location"),
+                                _filterButton(setState, "Training Name"),
+                                _filterButton(setState, "Trainer"),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              child: ListView(
+                                children: <Widget>[
+                                  TextField(
+                                    decoration: InputDecoration(
+                                        hintText: "Search",
+                                        border: OutlineInputBorder(),
+                                        prefixIcon: Icon(Icons.search),
+                                        suffixIcon: Icon(Icons.close),
+                                        contentPadding: EdgeInsets.fromLTRB(
+                                            20.0, 10.0, 20.0, 10.0)),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ));
+          });
+        });
+  }
+
+  List<Widget> _getHomeScreenCards(List<Training> _trainings) {
+    List<Widget> homeScreenCards = new List<Widget>();
+    homeScreenCards.add(SizedBox(
+      height: 15,
+    ));
+    for (var training in _trainings) {
+      homeScreenCards.add(HomeScreenCard());
+    }
+    return homeScreenCards;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Material(
-        child: CustomScrollView(
-          slivers: [
-            SliverPersistentHeader(
-              delegate: MySliverAppBar(expandedHeight: 230),
-              pinned: true,
-            ),
-            SliverList(
-              delegate: SliverChildListDelegate([
-                SizedBox(
-                  height: 80,
-                )
-              ]),
-            ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (_, index) => ListTile(
-                  title: Text("Index: $index"),
-                ),
+      child: BlocBuilder(
+        bloc: _homePageBloc,
+        builder: (BuildContext context, HomePageState state) {
+          if (state is HomePageLoadedState) {
+            var a = state.allTrainings;
+            return Material(
+              child: CustomScrollView(
+                slivers: [
+                  SliverPersistentHeader(
+                    delegate: MySliverAppBar(expandedHeight: 230),
+                    pinned: true,
+                  ),
+                  SliverAppBar(
+                      pinned: true,
+                      expandedHeight: 150.0,
+                      actions: <Widget>[
+                        OutlineButton(
+                          child: Row(
+                            children: <Widget>[
+                              Icon(Icons.filter_list),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text("Filter")
+                            ],
+                          ),
+                          onPressed: () {
+                            _modalBottomSheetMenu();
+                          },
+                        )
+                      ],
+                      flexibleSpace: FlexibleSpaceBar(
+                        collapseMode: CollapseMode.parallax,
+                        
+                        background: Container(
+                          padding: EdgeInsets.only(bottom: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: <BoxShadow>[
+                              BoxShadow(
+                                  color: Colors.grey.shade300, blurRadius: 10.0)
+                            ],
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                              SizedBox(
+                                height: 90,
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 15),
+                                  ),
+                                  OutlineButton(
+                                    child: Row(
+                                      children: <Widget>[
+                                        Icon(Icons.filter_list),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text("Filter")
+                                      ],
+                                    ),
+                                    onPressed: () {
+                                      _modalBottomSheetMenu();
+                                    },
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      )),
+                  SliverList(
+                    delegate: SliverChildListDelegate([
+                      Container(
+                        padding: EdgeInsets.only(bottom: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(
+                                color: Colors.grey.shade300, blurRadius: 10.0)
+                          ],
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(
+                              height: 90,
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.only(left: 15),
+                                ),
+                                OutlineButton(
+                                  child: Row(
+                                    children: <Widget>[
+                                      Icon(Icons.filter_list),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text("Filter")
+                                    ],
+                                  ),
+                                  onPressed: () {
+                                    _modalBottomSheetMenu();
+                                  },
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      )
+                    ]),
+                  ),
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      _getHomeScreenCards(state.allTrainings),
+                    ),
+                  )
+                ],
               ),
-            )
-          ],
-        ),
+            );
+          }
+        },
       ),
     );
   }
@@ -74,11 +339,13 @@ class MySliverAppBar extends SliverPersistentHeaderDelegate {
           top: expandedHeight / 2 - shrinkOffset,
           left: 15,
           child: Opacity(
-            opacity: (1 - shrinkOffset / (expandedHeight)),
-            child: SizedBox(
-              child: Text("Highlights", style: TextStyle(fontSize: 18, color: Colors.white),),
-            )
-          ),
+              opacity: (1 - shrinkOffset / (expandedHeight)),
+              child: SizedBox(
+                child: Text(
+                  "Highlights",
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
+              )),
         ),
 
         Positioned(
