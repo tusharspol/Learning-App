@@ -10,14 +10,25 @@ abstract class HomePageState extends Equatable {
 class HomePageLoadedState extends HomePageState {
 
   final List<Training> allTrainings;
+  final List<Training> trainingHighlights;
 
-  HomePageLoadedState(this.allTrainings) : super([allTrainings]);
+  HomePageLoadedState(this.allTrainings, this.trainingHighlights) : super([allTrainings, trainingHighlights]);
 
   @override
-  String toString() => 'LoadActivitiesState { allActivities: $allTrainings }';
+  String toString() => 'LoadActivitiesState { allActivities: $allTrainings, trainingHighlights: $trainingHighlights }';
 }
 
-class HideBottomNaviBarState extends HomePageState {
+class LoadHomePageState extends HomePageState {
   @override
   String toString() => 'HideBottomNaviBarState';
+}
+
+class HomePageFilteredRecordsState extends HomePageState {
+
+  final List<Training> allTrainings;
+
+  HomePageFilteredRecordsState(this.allTrainings) : super([allTrainings]);
+
+  @override
+  String toString() => 'LoadActivitiesState { allActivities: $allTrainings}';
 }

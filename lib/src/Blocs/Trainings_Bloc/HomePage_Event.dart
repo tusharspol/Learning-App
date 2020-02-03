@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:training_app/src/Models/Trainings.dart';
 
 @immutable
 abstract class HomePageEvent extends Equatable {
@@ -11,7 +12,19 @@ class FetchHomePageRecords extends HomePageEvent {
   String toString() => 'FetchHomePageRecords';
 }
 
-class LoadLayoutPages extends HomePageEvent {
+class LoadHomePageEvent extends HomePageEvent {
   @override
-  String toString() => 'LoadLayoutPages';
+  String toString() => 'LoadHomePageEvent';
+}
+
+class LoadFilteredRecords extends HomePageEvent {
+  final List<Training> filteredTrainings;
+
+  LoadFilteredRecords({@required this.filteredTrainings})
+      : super([filteredTrainings]);
+
+  @override
+  String toString() {
+    return 'LoadFilteredRecords { filteredTrainings: $filteredTrainings }';
+  }
 }

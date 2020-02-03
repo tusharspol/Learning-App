@@ -1,12 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:training_app/src/Models/Trainings.dart';
 import 'package:training_app/src/UI/Common/DottedBorder.dart';
 
-class HomeScreenCard extends StatefulWidget {
-  @override
-  _HomeScreenCardState createState() => _HomeScreenCardState();
-}
+class HomeScreenCard extends StatelessWidget {
 
-class _HomeScreenCardState extends State<HomeScreenCard> {
+  final Training trainingDetails;
+
+  HomeScreenCard({Key key, @required this.trainingDetails}): super(key:key);
+
+  getDateRange(DateTime startDate, DateTime endDate) {
+    String startDateMonth = DateFormat('MMM').format(startDate).toUpperCase();
+    String endDateMonth = DateFormat('MMM').format(startDate).toUpperCase();
+
+    if(startDateMonth == endDateMonth){
+      return '$startDateMonth ${startDate.day} - ${endDate.day}, ${endDate.year}';
+    }
+    else{
+      return '$startDateMonth ${startDate.day} - $endDateMonth ${endDate.day}, ${endDate.year}';
+    }
+  }
+
+  getTimeRange(TimeOfDay startTime, TimeOfDay endTime) {
+
+    final now = new DateTime.now();
+    var _tempDate = new DateTime(now.year, now.month, now.day, startTime.hour, startTime.minute);
+    var _startDate = DateFormat('h:mm a').format(_tempDate);
+
+    _tempDate = new DateTime(now.year, now.month, now.day, endTime.hour, endTime.minute);
+    var _endDate = DateFormat('h:mm a').format(_tempDate);
+
+    return '$_startDate - $_endDate';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,7 +52,7 @@ class _HomeScreenCardState extends State<HomeScreenCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "Oct 11 - 13, \n2019",
+                        getDateRange(trainingDetails.startDate, trainingDetails.endDate),
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w600),
                       ),
@@ -34,14 +60,14 @@ class _HomeScreenCardState extends State<HomeScreenCard> {
                         height: 5,
                       ),
                       Text(
-                        "8:30 am - 9:30 am",
+                        getTimeRange(trainingDetails.startTime, trainingDetails.endTime),
                         style: TextStyle(fontSize: 10),
                       ),
                       SizedBox(
                         height: 20,
                       ),
                       Text(
-                        "Convention Hall, Greater Des Eoines asd asd asd asd ",
+                        trainingDetails.venue,
                         style: TextStyle(fontSize: 11),
                       ),
                     ],
@@ -55,11 +81,11 @@ class _HomeScreenCardState extends State<HomeScreenCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Filling fast",
+                      trainingDetails.tagLine,
                       style: TextStyle(fontSize: 10, color: Colors.redAccent),
                     ),
                     Text(
-                      "Safe Scrum Master (4.6)",
+                      trainingDetails.name,
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                     SizedBox(
@@ -79,8 +105,8 @@ class _HomeScreenCardState extends State<HomeScreenCard> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text("Name here"),
-                            Text("Address here"),
+                            Text(trainingDetails.trainerName),
+                            Text(trainingDetails.trainerAddress),
                           ],
                         )
                       ],
@@ -92,7 +118,7 @@ class _HomeScreenCardState extends State<HomeScreenCard> {
                         children: <Widget>[
                           FlatButton(
                             color: Colors.redAccent,
-                            child: Text("Enroll now"),
+                            child: Text("Enroll now", style: TextStyle(color: Colors.white),),
                             onPressed: () {},
                           )
                         ],

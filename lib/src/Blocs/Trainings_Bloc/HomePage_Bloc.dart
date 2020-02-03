@@ -14,7 +14,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       : _trainingsService = trainingsService ?? TrainingsService();
 
   @override
-  HomePageState get initialState => HomePageLoadedState(null);
+  HomePageState get initialState => LoadHomePageState();
 
   @override
   Stream<HomePageState> mapEventToState(
@@ -22,12 +22,25 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   ) async* {
     if(event is FetchHomePageRecords){
       yield* _getTrainings();
+    } else if(event is LoadHomePageEvent){
+      yield LoadHomePageState();
+    } else if(event is LoadFilteredRecords){
+      yield* _getFilteredTrainings(event.filteredTrainings);
     }
   }
 
   Stream<HomePageState> _getTrainings() async* {
     var trainings = await _trainingsService.getTrainings();
-    yield HomePageLoadedState(trainings);
+    var highlightTrainings = await _trainingsService.getTrainingHighlights();
+    yield HomePageLoadedState(trainings, highlightTrainings);
+  }
+
+  Stream<HomePageState> _getFilteredTrainings(List<Training> filteredRecords) async* {
+    if(filteredRecords.length == 0){
+      filteredRecords = await _trainingsService.getTrainings();
+    }
+    var highlightTrainings = await _trainingsService.getTrainingHighlights();
+    yield HomePageLoadedState(filteredRecords, highlightTrainings);
   }
 
 }
