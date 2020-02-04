@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:training_app/src/UI/Common/Stylings.dart';
 
 class FilterBottomSheet extends StatefulWidget {
 
@@ -156,7 +157,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
         decoration: BoxDecoration(
             border: Border(
                 left: BorderSide(
-                    color: Colors.redAccent,
+                    color: Style.primaryColor,
                     width: btnName == selectedSortButton ? 5 : 0)),
             color: btnName == selectedSortButton
                 ? Colors.white

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Style {
   static final baseTextStyle = const TextStyle(
-    fontFamily: 'OpenSans'
+    fontFamily: 'Poppins'
   );
 
   static final errorText = baseTextStyle.copyWith(
@@ -33,7 +33,7 @@ class Style {
   static final roundedButtonShape = RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(30.0));
 
-  static final primaryColor = const Color(0xFF448AFF);
+  static final primaryColor = Colors.redAccent;
   static final primaryLightColor = primaryColor.withOpacity(0.2);
   static final backgroundColor = const Color(0xFFFAFAFA);
   static final blackTextColor = const Color(0xff515C6F);

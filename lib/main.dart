@@ -4,26 +4,10 @@ import 'package:training_app/src/Blocs/Authentication_Bloc/Authentication_Bloc.d
 import 'package:training_app/src/Blocs/Authentication_Bloc/Authentication_Event.dart';
 import 'package:training_app/src/Blocs/Authentication_Bloc/Authentication_State.dart';
 import 'package:training_app/src/Services/Authentication_Data.dart';
-import 'package:training_app/src/Services/Trainings_Data.dart';
 import 'package:training_app/src/SimpleBlocDelegate.dart';
 import 'package:bloc/bloc.dart';
 import 'package:training_app/src/UI/Home/HomeScreen.dart';
 import 'package:training_app/src/UI/Login/Login.dart';
-
-// void main() => runApp(MyApp());
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Training App',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       // home: MyHomePage(title: 'Flutter Demo Home Page'),
-//     );
-//   }
-// }
 
 
 main() {
@@ -59,7 +43,7 @@ class _AppState extends State<App> {
         debugShowCheckedModeBanner: false,
         theme: new ThemeData(
           backgroundColor: Colors.white,
-          primaryColor: Colors.blue,
+          primaryColor: Colors.red,
           fontFamily: 'Poppins',
           pageTransitionsTheme: PageTransitionsTheme(builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder(),}),
         ),
@@ -75,7 +59,7 @@ class _AppState extends State<App> {
             if (state is Authenticated) {
               return HomeScreen();
             }
-            return Text("Loader from main screen");
+            return Scaffold(body: Center(child: CircularProgressIndicator(),),);
           },
         ),
       ),

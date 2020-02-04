@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:training_app/src/Models/Trainings.dart';
+import 'package:training_app/src/UI/Common/Stylings.dart';
 
 class HighlightsCard extends StatelessWidget {
 
@@ -69,14 +70,14 @@ class HighlightsCard extends StatelessWidget {
                             TextSpan(
                                 text: '\$${trainingDetails.fees}',
                                 style: TextStyle(
-                                    color: Colors.redAccent,
+                                    color: Style.primaryColor,
                                     fontWeight: FontWeight.w500,
                                     decoration: TextDecoration.lineThrough)),
                             TextSpan(text: '   '),
                             TextSpan(
                                 text: '\$${trainingDetails.fees - trainingDetails.discount}',
                                 style: TextStyle(
-                                    color: Colors.redAccent,
+                                    color: Style.primaryColor,
                                     fontSize: 18,
                                     fontWeight: FontWeight.w600)),
                           ]),
@@ -160,10 +161,8 @@ class TrainingDetailsOverlay extends ModalRoute<void> {
     Animation<double> animation,
     Animation<double> secondaryAnimation,
   ) {
-    // This makes sure that text and other content follows the material style
     return Material(
       type: MaterialType.transparency,
-      // make sure that the overlay content is not cut off
       child: SafeArea(
         child: _buildOverlayContent(context),
       ),
@@ -217,7 +216,7 @@ class TrainingDetailsOverlay extends ModalRoute<void> {
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
-                          color: Colors.redAccent),
+                          color: Style.primaryColor),
                     ),
                     Text(
                       "\$${trainingDetails.fees - trainingDetails.discount}",
@@ -230,10 +229,10 @@ class TrainingDetailsOverlay extends ModalRoute<void> {
             SizedBox(
               height: 20,
             ),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(25),
-              child: Image.asset("assets/images/Training.jpg"),
-            ),
+            // ClipRRect(
+            //   borderRadius: BorderRadius.circular(25),
+            //   child: Image.asset("assets/images/Training.jpg"),
+            // ),
             SizedBox(
               height: 20,
             ),
@@ -278,7 +277,7 @@ class TrainingDetailsOverlay extends ModalRoute<void> {
               height: 25,
             ),
             RaisedButton(
-              color: Colors.redAccent,
+              color: Style.primaryColor,
               onPressed: () => Navigator.pop(context),
               child: Container(
                 width: double.infinity,
@@ -298,7 +297,6 @@ class TrainingDetailsOverlay extends ModalRoute<void> {
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation, Widget child) {
-    // You can add your own animations for the overlay content
     return FadeTransition(
       opacity: animation,
       child: ScaleTransition(

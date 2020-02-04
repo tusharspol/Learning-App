@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:training_app/src/Models/Trainings.dart';
 import 'package:training_app/src/UI/Common/DottedBorder.dart';
+import 'package:training_app/src/UI/Common/Stylings.dart';
 
 class HomeScreenCard extends StatelessWidget {
 
@@ -82,7 +83,7 @@ class HomeScreenCard extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       trainingDetails.tagLine,
-                      style: TextStyle(fontSize: 10, color: Colors.redAccent),
+                      style: TextStyle(fontSize: 10, color: Style.primaryColor),
                     ),
                     Text(
                       trainingDetails.name,
@@ -97,7 +98,7 @@ class HomeScreenCard extends StatelessWidget {
                       children: <Widget>[
                         CircleAvatar(
                           radius: 25,
-                          backgroundColor: Colors.redAccent,
+                          backgroundColor: Style.primaryColor,
                         ),
                         SizedBox(
                           width: 10,
@@ -117,7 +118,7 @@ class HomeScreenCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
                           FlatButton(
-                            color: Colors.redAccent,
+                            color: Style.primaryColor,
                             child: Text("Enroll now", style: TextStyle(color: Colors.white),),
                             onPressed: () {},
                           )
